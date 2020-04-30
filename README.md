@@ -1,5 +1,4 @@
-# wlscripts
-WL Scripts
+# WL Scripts
 
 This repo contains my WealthLab Pro's scripts.
 
