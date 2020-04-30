@@ -1,3 +1,7 @@
+//===========================================================================================================
+// A WealthLab script to plot my faviorite indicators and chart marking for daily, weekly and monthly charts.
+//----------------------------------------------------------------------------------------------------------- 
+
 using System;
 using System.Collections.Generic;
 using System.Text;
