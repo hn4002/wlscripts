@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>CommentaryWindow</Name>
+  <ID>dc376c7a-34ca-455b-885a-fcb7ff7694fc</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+using Community.Components; // CommentaryWindow here
+/*** Requires installation of Community.Components Extension from www.wealth-lab.com &gt; Extensions ***/namespace WealthLab.Strategies
+{
+	public class MyStrategy : WealthScript
+	{
+		protected override void Execute()
+		{
+			// Path to the resulting HTML file
+			string path = @"C:\Commentary.html";
+         
+			// Create an instance of the CommentaryWindow class
+			CommentaryWindow cw = new CommentaryWindow( path );         
+			for(int bar = Bars.Count-20; bar &lt; Bars.Count; bar++)
+			{
+				// Add a line
+				cw.AddLine( "Bar Number: " + bar.ToString() );
+			}
+         
+			// Display Commentary Window
+			cw.Display();
+         
+			// second commentary window *******************************
+         
+			// Path to the resulting HTML file
+			string path2 = @"C:\Commentary2.html";
+         
+			// Create an instance of the CommentaryWindow class
+			CommentaryWindow cw2 = new CommentaryWindow( path2 );         
+			for(int bar = Bars.Count-40; bar &lt; Bars.Count - 20; bar++)
+			{
+				// Add a line
+				cw2.AddLine( "Bar Number: " + bar.ToString() );
+			}
+         
+			// Display Commentary Window
+			cw2.Display();
+
+		}
+	}
+}</Code>
+  <Description />
+  <Author>Local</Author>
+  <CreationDate>2017-08-19T01:08:14.5039348-07:00</CreationDate>
+  <LastModified>2017-08-19T01:08:14.5351829-07:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <NetworkDrivePath />
+  <ParameterValues />
+  <DataSetName>AllFid</DataSetName>
+  <Symbol>AAOI</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <PosSizerConfig />
+    <MarginFactor>1</MarginFactor>
+    <OverrideShareSize>0</OverrideShareSize>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2012-08-15T00:00:00</StartDate>
+    <EndDate>2017-08-01T00:00:00</EndDate>
+    <FixedBars>500</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+  <PreferredValues />
+  <UsePreferredValues>false</UsePreferredValues>
+  <StartingEquity>100000</StartingEquity>
+  <MarginFactor>1</MarginFactor>
+  <PanelSize />
+  <Origin />
+  <CombinedStrategyChildren />
+</Strategy>

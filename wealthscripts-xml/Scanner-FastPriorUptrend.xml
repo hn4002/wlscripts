@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Scanner-FastPriorUptrend</Name>
+  <ID>89226dc0-dd97-4e77-bc03-7aae3f8c0410</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using WealthLab;
+using WealthLab.Indicators;
+using System.IO;
+
+public class FastPriorUptrend : WealthScript
+{
+	bool NO_AUTO_EXECUTE = true;
+	
+	protected override void Execute()
+	{
+		const string sep = ",";
+		const string fmt = "0.00########";
+		string dateFormat = "yyyyMMdd";
+		string workingDir = @"Z:\Win10D";
+		int barsInAYear = 250;
+
+		ClearDebug();
+
+		string today = DateTime.Now.ToString("yyyy-MM-dd");
+		string path = Path.Combine(workingDir, "Data", today);
+		
+		PrintDebug(String.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", 
+			"Symbol", "HighPrice", "LowPrice", "PriceDiffPct", "Weeks", "PriceDiffPctWk"));
+
+		for(int ds = 0; ds &lt; DataSetSymbols.Count; ds++)
+		{
+			string symbol = DataSetSymbols[ds];
+			Bars bars = GetExternalSymbol( symbol, false );
+
+			PrintStatusBar("Processing: " + ds + " / " + DataSetSymbols.Count + " : " + bars.Symbol + "     " );
+			
+			if (bars.Count &gt; barsInAYear) {
+				double highPrice = Highest.Value(bars.Count - 1, bars.High, barsInAYear);
+				double highBar = HighestBar.Value(bars.Count - 1, bars.High, barsInAYear);
+				double lowPrice = Lowest.Value(bars.Count - 1, bars.Low, barsInAYear);
+				double lowBar = LowestBar.Value(bars.Count - 1, bars.Low, barsInAYear);
+				if (highBar &gt; lowBar) {
+					double priceDiffPct = (highPrice - lowPrice) / lowPrice * 100;
+					double weeks = Math.Ceiling((highBar - lowBar) / 5.0);
+					double priceDiffPctWk = priceDiffPct / weeks;
+					PrintDebug(String.Format("{0}\t{1:f}\t{2:f}\t{3:f}\t{4}\t{5:f}", 
+						symbol, highPrice, lowPrice, priceDiffPct, weeks, priceDiffPctWk));
+					
+					
+				}
+			}
+		
+			Bars.Cache.Clear(); 
+		}
+		//PrintStatusBar("Complete!");		
+	}
+}</Code>
+  <Description />
+  <Author>Local</Author>
+  <CreationDate>2017-10-05T08:21:56.0464239-07:00</CreationDate>
+  <LastModified>2017-10-20T18:37:09.8394241-07:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <NetworkDrivePath />
+  <ParameterValues />
+  <DataSetName>Fid-BigList</DataSetName>
+  <Symbol>AA</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <PosSizerConfig />
+    <MarginFactor>1</MarginFactor>
+    <OverrideShareSize>0</OverrideShareSize>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2012-08-15T00:00:00</StartDate>
+    <EndDate>2017-08-01T00:00:00</EndDate>
+    <FixedBars>500</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+  <PreferredValues />
+  <UsePreferredValues>false</UsePreferredValues>
+  <StartingEquity>100000</StartingEquity>
+  <MarginFactor>1</MarginFactor>
+  <PanelSize />
+  <Origin />
+  <CombinedStrategyChildren />
+</Strategy>

@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Test</Name>
+  <ID>41127976-d08c-49c5-972b-b970e757f0ea</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+using System.IO;
+
+namespace WealthLab.Strategies
+{
+	public class MyStrategy : WealthScript
+	{
+
+		protected override void Execute()
+		{
+			string today = DateTime.Now.ToString("yyyy-MM-dd");
+			string workingDir = @"Z:\Win10D";
+			string path = Path.Combine(workingDir, "Data", today);
+		
+			if (!Directory.Exists(path))
+				throw new Exception("You must create the directory " + path);
+
+			PrintStatusBar(today + " Complete!");
+			
+			//Pushed indicator ChartPane statements
+			ChartPane paneEquitySummaryScore1 = CreatePane(40,true,true);
+			ChartPane paneEquitySummaryCategory1 = CreatePane(40,true,true);
+			ChartPane paneEarnings1 = CreatePane(40,true,true);
+
+			//Pushed indicator PlotSeries statements
+			PlotFundamentalItems(paneEquitySummaryScore1,"equity summary score",Color.FromArgb(255,255,0,0),LineStyle.Solid,1);
+			PlotFundamentalItems(paneEquitySummaryCategory1,"equity summary category",Color.FromArgb(255,255,0,0),LineStyle.Solid,1);
+			PlotFundamentalItems(paneEarnings1,"estimated earnings",Color.FromArgb(255,0,128,128),LineStyle.Solid,1);
+			PlotFundamentalItems(paneEarnings1,"earnings per share",Color.FromArgb(255,255,0,0),LineStyle.Solid,1);
+
+		}
+	}
+}</Code>
+  <Description />
+  <Author>Local</Author>
+  <CreationDate>2017-08-18T21:21:14.5858229-07:00</CreationDate>
+  <LastModified>2017-08-18T22:35:58.7543455-07:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <NetworkDrivePath />
+  <ParameterValues />
+  <DataSetName>AllFid</DataSetName>
+  <Symbol>A</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <PosSizerConfig />
+    <MarginFactor>1</MarginFactor>
+    <OverrideShareSize>0</OverrideShareSize>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2012-08-15T00:00:00</StartDate>
+    <EndDate>2017-08-01T00:00:00</EndDate>
+    <FixedBars>500</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+  <PreferredValues />
+  <UsePreferredValues>false</UsePreferredValues>
+  <StartingEquity>100000</StartingEquity>
+  <MarginFactor>1</MarginFactor>
+  <PanelSize />
+  <Origin />
+  <CombinedStrategyChildren />
+</Strategy>

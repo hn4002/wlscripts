@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Strategy001</Name>
+  <ID>bd61a286-ac9b-4aae-b825-54f8b06d1f75</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Drawing;
+using WealthLab;
+using WealthLab.Indicators;
+
+namespace WealthLab.Strategies
+{
+	public class MyStrategy : WealthScript
+	{
+		Color colorUp = Color.FromArgb(39, 54, 233);
+		Color colorDown = Color.FromArgb(222, 50, 174);
+
+		protected override void Execute()
+		{
+			
+			SetBarColors( colorUp, colorDown );
+			SetLogScale( PricePane, true );
+			SetLogScale( VolumePane, true );
+
+
+			DataSeries maFast = SMA.Series(Close, 20);
+			DataSeries maSlow = SMA.Series(Close, 60);
+			DataSeries ma = SMA.Series(Close, 20);
+
+			PlotSeries(PricePane,SMA.Series(Close,20),Color.Red,LineStyle.Solid,2);
+			PlotSeries(PricePane,SMA.Series(Close,60),Color.Green,LineStyle.Solid,2);
+			PlotSeries(PricePane,SMA.Series(Close,20),Color.Blue,LineStyle.Solid,2);
+
+			for(int bar = GetTradingLoopStartBar(61); bar &lt; Bars.Count; bar++)
+			{
+				if (IsLastPositionActive)
+				{
+					Position p = LastPosition;
+					if (p.EntrySignal.Contains("Group1|"))
+					{
+						if (CrossUnder(bar, Close, ma))
+						{
+							SellAtClose(bar, p, "Group1");
+						}
+					}
+
+				}
+				else
+				{
+					if (CrossOver(bar, maFast, maSlow))
+					{
+						BuyAtClose(bar, "Group1|");
+					}
+
+				}
+			}
+		}
+	}
+}</Code>
+  <Description />
+  <Author>Local</Author>
+  <CreationDate>2017-08-16T05:27:35.0012635-07:00</CreationDate>
+  <LastModified>2017-08-18T22:33:02.1503905-07:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <NetworkDrivePath />
+  <ParameterValues />
+  <DataSetName>Fidall</DataSetName>
+  <Symbol>AVXS</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <PosSizerConfig />
+    <MarginFactor>1</MarginFactor>
+    <OverrideShareSize>0</OverrideShareSize>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2012-08-15T00:00:00</StartDate>
+    <EndDate>2017-08-15T00:00:00</EndDate>
+    <FixedBars>500</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+  <PreferredValues />
+  <UsePreferredValues>false</UsePreferredValues>
+  <StartingEquity>100000</StartingEquity>
+  <MarginFactor>1</MarginFactor>
+  <PanelSize />
+  <Origin />
+  <CombinedStrategyChildren />
+</Strategy>

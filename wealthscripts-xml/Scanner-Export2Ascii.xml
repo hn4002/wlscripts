@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Scanner-Export2Ascii</Name>
+  <ID>7b591b0a-f327-4e0a-b187-8b69bb4346c4</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using WealthLab;
+using System.IO;
+
+public class Export2ASCII : WealthScript
+{
+	bool NO_AUTO_EXECUTE = true;
+	
+	protected override void Execute()
+	{
+		if(NO_AUTO_EXECUTE)
+		{
+			NO_AUTO_EXECUTE = false;
+			return;
+		}
+		
+		const string sep = ",";
+		const string fmt = "0.00########";
+		string dateFormat = "yyyyMMdd";
+		string workingDir = @"Z:\Win10D";
+
+		string today = DateTime.Now.ToString("yyyy-MM-dd");
+		string path = Path.Combine(workingDir, "Data", today);
+		
+		if (!Directory.Exists(path))
+		{
+			PrintDebug("Creating directory: " + path); FlushDebug();
+			Directory.CreateDirectory(path);
+		}
+		
+		for(int ds = 0; ds &lt; DataSetSymbols.Count; ds++)
+		{
+			string symbol = DataSetSymbols[ds];
+			Bars bars = GetExternalSymbol( symbol, false );
+
+			PrintStatusBar("Exporting: " + ds + " / " + DataSetSymbols.Count + " : " + bars.Symbol + "     " );
+			
+			string file = Path.Combine(path, symbol + ".csv");
+		
+			List&lt;string&gt; datalist = new List&lt;string&gt;();
+		
+			for(int bar = 0; bar &lt; bars.Count; bar++)
+			{			
+				string csv = bars.Date[bar].ToString(dateFormat) + sep 
+					+ bars.Open[bar].ToString(fmt) + sep 
+					+ bars.High[bar].ToString(fmt) + sep 
+					+ bars.Low[bar].ToString(fmt) + sep 
+					+ bars.Close[bar].ToString(fmt) + sep 
+					+ bars.Volume[bar].ToString("0");
+			
+				datalist.Add(csv);
+			}
+			File.WriteAllLines(file, datalist);
+		
+			Bars.Cache.Clear(); 
+		}
+		//PrintStatusBar("Complete!");		
+	}
+}</Code>
+  <Description />
+  <Author>Local</Author>
+  <CreationDate>2017-10-05T08:18:52.1462575-07:00</CreationDate>
+  <LastModified>2017-10-05T08:18:52.1462575-07:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <NetworkDrivePath />
+  <ParameterValues />
+  <DataSetName>AllFid</DataSetName>
+  <Symbol>A</Symbol>
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <PosSizerConfig />
+    <MarginFactor>1</MarginFactor>
+    <OverrideShareSize>0</OverrideShareSize>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2012-08-15T00:00:00</StartDate>
+    <EndDate>2017-08-01T00:00:00</EndDate>
+    <FixedBars>500</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+  <PreferredValues />
+  <UsePreferredValues>false</UsePreferredValues>
+  <StartingEquity>100000</StartingEquity>
+  <MarginFactor>1</MarginFactor>
+  <PanelSize />
+  <Origin />
+  <CombinedStrategyChildren />
+</Strategy>

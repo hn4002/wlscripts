@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<Strategy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>BT-export2Ascii</Name>
+  <ID>e4c2358a-1465-4639-9294-11fdddd6abc3</ID>
+  <Code>using System;
+using System.Collections.Generic;
+using System.Text;
+using WealthLab;
+using System.IO;
+
+/**
+ * Run this script on a DataSet using Back Testing.
+ *
+ */
+public class Export2ASCII : WealthScript
+{	
+	protected override void Execute()
+	{
+		const string sep = ",";
+		const string fmt = "0.00########";
+		string dateFormat = "yyyyMMdd";
+		string workingDir = @"Z:\Win10D";
+
+		string today = DateTime.Now.ToString("yyyy-MM-dd");
+		string path = Path.Combine(workingDir, "Data", today);
+		
+		if (!Directory.Exists(path))
+		{
+			PrintDebug("Creating directory: " + path); FlushDebug();
+			Directory.CreateDirectory(path);
+		}
+
+		PrintStatusBar("Exporting: " + Bars.Symbol + "     " );
+			
+		string file = Path.Combine(path, Bars.Symbol + ".csv");
+		
+		List&lt;string&gt; datalist = new List&lt;string&gt;();
+		
+		for(int bar = 0; bar &lt; Bars.Count; bar++)
+		{			
+			string csv = Date[bar].ToString(dateFormat) + sep 
+				+ Open[bar].ToString(fmt) + sep 
+				+ High[bar].ToString(fmt) + sep 
+				+ Low[bar].ToString(fmt) + sep 
+				+ Close[bar].ToString(fmt) + sep 
+				+ Volume[bar].ToString("0");
+			
+			datalist.Add(csv);
+		}
+		File.WriteAllLines(file, datalist);
+		
+		Bars.Cache.Clear(); 
+		//PrintStatusBar("Complete!");		
+	}
+}</Code>
+  <Description />
+  <Author>Local</Author>
+  <CreationDate>2017-10-05T08:19:34.8478462-07:00</CreationDate>
+  <LastModified>2017-10-14T22:15:14.5349205-07:00</LastModified>
+  <StrategyType>Script</StrategyType>
+  <AccountNumber />
+  <NetworkDrivePath />
+  <ParameterValues />
+  <DataSetName>AllFid</DataSetName>
+  <Symbol />
+  <DataScale>
+    <Scale>Daily</Scale>
+    <BarInterval>0</BarInterval>
+  </DataScale>
+  <PositionSize>
+    <Mode>RawProfitDollar</Mode>
+    <RawProfitDollarSize>5000</RawProfitDollarSize>
+    <RawProfitShareSize>100</RawProfitShareSize>
+    <StartingCapital>100000</StartingCapital>
+    <DollarSize>5000</DollarSize>
+    <ShareSize>100</ShareSize>
+    <PctSize>10</PctSize>
+    <RiskSize>3</RiskSize>
+    <SimuScriptName />
+    <PosSizerConfig />
+    <MarginFactor>1</MarginFactor>
+    <OverrideShareSize>0</OverrideShareSize>
+  </PositionSize>
+  <DataRange>
+    <Range>AllData</Range>
+    <StartDate>2012-08-15T00:00:00</StartDate>
+    <EndDate>2017-08-01T00:00:00</EndDate>
+    <FixedBars>500</FixedBars>
+    <RecentValue>10</RecentValue>
+    <IsStreaming>false</IsStreaming>
+  </DataRange>
+  <Indicators>AAAAAAAAAAA=</Indicators>
+  <Rules />
+  <SinglePosition>true</SinglePosition>
+  <References />
+  <PreferredValues />
+  <UsePreferredValues>false</UsePreferredValues>
+  <StartingEquity>100000</StartingEquity>
+  <MarginFactor>1</MarginFactor>
+  <PanelSize />
+  <Origin />
+  <CombinedStrategyChildren />
+</Strategy>
