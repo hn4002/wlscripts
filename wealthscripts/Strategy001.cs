@@ -28,7 +28,7 @@ namespace WealthLab.Strategies
 			PlotSeries(PricePane,SMA.Series(Close,60),Color.Green,LineStyle.Solid,2);
 			PlotSeries(PricePane,SMA.Series(Close,20),Color.Blue,LineStyle.Solid,2);
 
-			for(int bar = GetTradingLoopStartBar(61); bar &lt; Bars.Count; bar++)
+			for(int bar = GetTradingLoopStartBar(61); bar < Bars.Count; bar++)
 			{
 				if (IsLastPositionActive)
 				{

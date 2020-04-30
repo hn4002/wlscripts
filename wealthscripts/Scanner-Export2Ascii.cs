@@ -30,7 +30,7 @@ public class Export2ASCII : WealthScript
 			Directory.CreateDirectory(path);
 		}
 		
-		for(int ds = 0; ds &lt; DataSetSymbols.Count; ds++)
+		for(int ds = 0; ds < DataSetSymbols.Count; ds++)
 		{
 			string symbol = DataSetSymbols[ds];
 			Bars bars = GetExternalSymbol( symbol, false );
@@ -39,9 +39,9 @@ public class Export2ASCII : WealthScript
 			
 			string file = Path.Combine(path, symbol + ".csv");
 		
-			List&lt;string&gt; datalist = new List&lt;string&gt;();
+			List<string&gt; datalist = new List<string&gt;();
 		
-			for(int bar = 0; bar &lt; bars.Count; bar++)
+			for(int bar = 0; bar < bars.Count; bar++)
 			{			
 				string csv = bars.Date[bar].ToString(dateFormat) + sep 
 					+ bars.Open[bar].ToString(fmt) + sep 

@@ -18,7 +18,7 @@ namespace WealthLab.Strategies
 
 			for (int bar = GetTradingLoopStartBar(1); bar &lt; Bars.Count; bar++)
 			{
-				if (rocUp[bar] &gt;= 5 &amp;&amp; rocDown[bar] &gt;= 5)
+				if (rocUp[bar] >= 5 &amp;&amp; rocDown[bar] >= 5)
 				{
 					AnnotateBar("|", bar, false, Color.Black);
 					AnnotateBar("|", bar, false, Color.Black);

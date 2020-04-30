@@ -16,7 +16,7 @@ using Community.Components; // CommentaryWindow here
          
 			// Create an instance of the CommentaryWindow class
 			CommentaryWindow cw = new CommentaryWindow( path );         
-			for(int bar = Bars.Count-20; bar &lt; Bars.Count; bar++)
+			for(int bar = Bars.Count-20; bar < Bars.Count; bar++)
 			{
 				// Add a line
 				cw.AddLine( "Bar Number: " + bar.ToString() );
@@ -32,7 +32,7 @@ using Community.Components; // CommentaryWindow here
          
 			// Create an instance of the CommentaryWindow class
 			CommentaryWindow cw2 = new CommentaryWindow( path2 );         
-			for(int bar = Bars.Count-40; bar &lt; Bars.Count - 20; bar++)
+			for(int bar = Bars.Count-40; bar < Bars.Count - 20; bar++)
 			{
 				// Add a line
 				cw2.AddLine( "Bar Number: " + bar.ToString() );

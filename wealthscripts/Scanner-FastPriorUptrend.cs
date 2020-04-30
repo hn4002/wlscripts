@@ -25,7 +25,7 @@ public class FastPriorUptrend : WealthScript
 		PrintDebug(String.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}", 
 			"Symbol", "HighPrice", "LowPrice", "PriceDiffPct", "Weeks", "PriceDiffPctWk"));
 
-		for(int ds = 0; ds &lt; DataSetSymbols.Count; ds++)
+		for(int ds = 0; ds < DataSetSymbols.Count; ds++)
 		{
 			string symbol = DataSetSymbols[ds];
 			Bars bars = GetExternalSymbol( symbol, false );
