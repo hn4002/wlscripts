@@ -1,5 +1,5 @@
 //===========================================================================================================
-// A WealthLab script to plot my faviorite indicators and chart marking for daily, weekly and monthly charts.
+// A WealthLab script to plot my faviorite indicators and chart markings on daily, weekly and monthly charts.
 //----------------------------------------------------------------------------------------------------------- 
 
 using System;
