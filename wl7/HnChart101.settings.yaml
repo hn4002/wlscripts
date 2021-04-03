@@ -1,0 +1,19 @@
+
+extendedBars: 0
+
+# ^GSPC, .SPX, SPY, SP500
+SP500: 0SP500
+
+# ^IXIC"
+NASDAQ: 0NASDAQ
+
+# Different data files
+tradeFile: C:\WLD\2018-LeeMP\trades.csv
+mpFile: C:\WLD\2018-LeeMP\mp.csv
+wooFile: C:\WLD\2018-LeeMP\woo.csv
+
+# Colors
+upColor: #1D13E3
+downColor: #D30E9F
+
+
