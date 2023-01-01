@@ -1,0 +1,4 @@
+//Blank Chartscript
+
+ShowMessage ( 'TEST' );
+
