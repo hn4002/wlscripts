@@ -1,0 +1,31 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © lion10d100g
+
+// This script is for study purpose only. This script tries to identify PBB breakouts.
+// Consider other factors like market condition, sector and group performance and technicals and 
+// fundamentals of a stock before buying the stock.
+
+//@version=5
+indicator("PBB Breakout", overlay = true)
+
+// Is it pullback?
+// high of bar-3, bar-4, bar-5 > high of bar-1, bar-2
+isPullback = false
+if (math.max(high[3], high[4], high[5]) > math.max(high[1], high[2]))
+    isPullback := true
+
+// PBB breakout
+// high of bar-1, bar-2 < high of curr bar
+isBreakout = false
+if (math.max(high[1], high[2]) < high)
+    isBreakout := true
+    // Making it a bit more complicated - If there was a PBB breakout in the previous bar, then don't have it for the current bar
+    if (math.max(high[2], high[3]) < high[1])
+        isBreakout := false
+
+//data = (isPullback and isBreakout) ? 1 : 0
+//plotarrow(data, colorup=color.new(color.orange, 40))
+
+data = isPullback and isBreakout
+plotchar(data, char='⬆', location=location.belowbar, color=color.new(color.orange, 2))
+
