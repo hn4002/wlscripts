@@ -1,0 +1,62 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © lion10d100g
+
+//@version=5
+indicator("priceLevels.auto", overlay = true)
+
+xlString = "AAPL,148.00,140.00;TSLA,123.34,120.45"
+backIndex = 80
+
+
+type stockBS
+    string symbol 
+    float buyPrice
+    float stopPrice
+
+if barstate.islastconfirmedhistory
+    lines = str.split(xlString, ";") 
+    stocks = array.new<stockBS>()
+    for line in lines
+        tokens = str.split(line, ",")
+        symbol = array.get(tokens, 0)
+        buyPrice = str.tonumber(array.get(tokens, 1))
+        stopPrice = str.tonumber(array.get(tokens, 2))
+        sbs4 = stockBS.new(symbol = symbol, buyPrice = buyPrice, stopPrice = stopPrice)
+        array.push(stocks, sbs4)
+
+    for stock in stocks
+        if stock.symbol == syminfo.ticker
+            label.new(bar_index[30], close, "Got Symbol")  
+
+            // Buy Price
+            line.new(bar_index[backIndex], stock.buyPrice, bar_index, stock.buyPrice, color = color.rgb(23, 77, 121))
+            buyText = "BuyPrice = " + str.tostring(stock.buyPrice)
+            label.new(bar_index[backIndex], stock.buyPrice, buyText, style = label.style_label_down, color = na, textcolor = color.blue)
+
+            // Stop Price
+            line.new(bar_index[backIndex], stock.stopPrice, bar_index, stock.stopPrice, color = color.orange)
+            stopText = "StopPrice = " + str.tostring(stock.stopPrice)
+            label.new(bar_index[backIndex], stock.stopPrice, stopText, style = label.style_label_down, color = na, textcolor = color.orange)
+
+            // 1R Price
+            R = stock.buyPrice - stock.stopPrice
+            priceGoal1R = stock.buyPrice + 1 * R
+            line.new(bar_index[backIndex], priceGoal1R, bar_index, priceGoal1R, color = color.green, style = line.style_dashed)
+            label.new(bar_index[backIndex], priceGoal1R, "1R = " + str.tostring(priceGoal1R), style = label.style_label_down, color = na, textcolor = color.green)
+
+            // 2R Price
+            priceGoal2R = stock.buyPrice + 2 * R
+            line.new(bar_index[backIndex], priceGoal2R, bar_index, priceGoal2R, color = color.green)
+            label.new(bar_index[backIndex], priceGoal2R, "1R = " + str.tostring(priceGoal2R), style = label.style_label_down, color = na, textcolor = color.green)
+
+            // 3R Price
+            priceGoal3R = stock.buyPrice + 3 * R
+            line.new(bar_index[backIndex], priceGoal3R, bar_index, priceGoal3R, color = color.green, style = line.style_dashed)
+            label.new(bar_index[backIndex], priceGoal3R, "1R = " + str.tostring(priceGoal3R), style = label.style_label_down, color = na, textcolor = color.green)
+
+            // 4R Price
+            priceGoal4R = stock.buyPrice + 4 * R
+            line.new(bar_index[backIndex], priceGoal4R, bar_index, priceGoal4R, color = color.green)
+            label.new(bar_index[backIndex], priceGoal4R, "1R = " + str.tostring(priceGoal4R), style = label.style_label_down, color = na, textcolor = color.green)
+// End
+
