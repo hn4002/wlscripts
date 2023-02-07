@@ -7,6 +7,9 @@ indicator("priceLevels.auto", overlay = true)
 xlString = input.string("ASC,15.19,14.18;MACK,11.69,11.09;SHC,17.64,16.34", "PriceLevelString", confirm = true)
 show3R = input.bool(true, "3R", group="Shwo Price Levels")
 show4R = input.bool(true, "4R", group="Shwo Price Levels")
+show5R = input.bool(false, "5R", group="Shwo Price Levels")
+show6R = input.bool(false, "6R", group="Shwo Price Levels")
+show10R = input.bool(false, "10R", group="Shwo Price Levels")
 
 backIndex = 80
 
@@ -33,12 +36,12 @@ if barstate.islastconfirmedhistory
 
             // Buy Price
             line.new(bar_index[backIndex], stock.buyPrice, bar_index, stock.buyPrice, color = color.rgb(23, 77, 121))
-            buyText = "BuyPrice = " + str.tostring(stock.buyPrice)
+            buyText = "Buy Price = " + str.tostring(stock.buyPrice)
             label.new(bar_index[backIndex], stock.buyPrice, buyText, style = label.style_label_down, color = na, textcolor = color.blue)
 
             // Stop Price
             line.new(bar_index[backIndex], stock.stopPrice, bar_index, stock.stopPrice, color = color.orange)
-            stopText = "StopPrice = " + str.tostring(stock.stopPrice)
+            stopText = "Initial SL = " + str.tostring(stock.stopPrice)
             label.new(bar_index[backIndex], stock.stopPrice, stopText, style = label.style_label_down, color = na, textcolor = color.orange)
 
             // 1R Price
@@ -63,5 +66,23 @@ if barstate.islastconfirmedhistory
                 priceGoal4R = stock.buyPrice + 4 * R
                 line.new(bar_index[backIndex], priceGoal4R, bar_index, priceGoal4R, color = color.green)
                 label.new(bar_index[backIndex], priceGoal4R, "4R = " + str.tostring(priceGoal4R), style = label.style_label_down, color = na, textcolor = color.green)
+
+            // 5R Price
+            if show5R
+                priceGoal5R = stock.buyPrice + 5 * R
+                line.new(bar_index[backIndex], priceGoal5R, bar_index, priceGoal5R, color = color.green)
+                label.new(bar_index[backIndex], priceGoal5R, "5R = " + str.tostring(priceGoal5R), style = label.style_label_down, color = na, textcolor = color.green)
+
+            // 6R Price
+            if show6R
+                priceGoal6R = stock.buyPrice + 6 * R
+                line.new(bar_index[backIndex], priceGoal6R, bar_index, priceGoal6R, color = color.green)
+                label.new(bar_index[backIndex], priceGoal6R, "6R = " + str.tostring(priceGoal6R), style = label.style_label_down, color = na, textcolor = color.green)
+
+            // 10R Price
+            if show10R
+                priceGoal10R = stock.buyPrice + 10 * R
+                line.new(bar_index[backIndex], priceGoal10R, bar_index, priceGoal10R, color = color.green)
+                label.new(bar_index[backIndex], priceGoal10R, "10R = " + str.tostring(priceGoal10R), style = label.style_label_down, color = na, textcolor = color.green)
 // End
 
