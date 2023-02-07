@@ -5,6 +5,7 @@
 indicator("priceLevels.auto", overlay = true)
 
 xlString = input.string("ASC,15.19,14.18;MACK,11.69,11.09;SHC,17.64,16.34", "PriceLevelString", confirm = true)
+showHR = input.bool(true, "-0.5R", group="Shwo Price Levels")
 show3R = input.bool(true, "3R", group="Shwo Price Levels")
 show4R = input.bool(true, "4R", group="Shwo Price Levels")
 show5R = input.bool(false, "5R", group="Shwo Price Levels")
@@ -33,6 +34,7 @@ if barstate.islastconfirmedhistory
     for stock in stocks
         if stock.symbol == syminfo.ticker
             //label.new(bar_index[30], close, "Got Symbol")  
+            R = stock.buyPrice - stock.stopPrice
 
             // Buy Price
             line.new(bar_index[backIndex], stock.buyPrice, bar_index, stock.buyPrice, color = color.rgb(23, 77, 121))
@@ -44,8 +46,14 @@ if barstate.islastconfirmedhistory
             stopText = "Initial SL = " + str.tostring(stock.stopPrice)
             label.new(bar_index[backIndex], stock.stopPrice, stopText, style = label.style_label_down, color = na, textcolor = color.orange)
 
+            // Half R stoploss
+            if showHR
+                priceHalfIniSL = stock.buyPrice - 0.5 * R
+                line.new(bar_index[backIndex], priceHalfIniSL, bar_index, priceHalfIniSL, color = color.orange, style = line.style_dashed)
+                //stopTextH = "Initial SL = " + str.tostring(stock.stopPrice)
+                //label.new(bar_index[backIndex], stock.stopPrice, stopText, style = label.style_label_down, color = na, textcolor = color.orange)
+
             // 1R Price
-            R = stock.buyPrice - stock.stopPrice
             priceGoal1R = stock.buyPrice + 1 * R
             line.new(bar_index[backIndex], priceGoal1R, bar_index, priceGoal1R, color = color.green, style = line.style_dashed)
             label.new(bar_index[backIndex], priceGoal1R, "1R = " + str.tostring(priceGoal1R), style = label.style_label_down, color = na, textcolor = color.green)
