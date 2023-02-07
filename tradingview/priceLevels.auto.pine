@@ -4,7 +4,10 @@
 //@version=5
 indicator("priceLevels.auto", overlay = true)
 
-xlString = "ALNY,231.99,220.07;FULC,12.95,12.15;MACK,11.69,11.09;MDGL,290.0,273.09;SHC,17.64,17.28"
+xlString = input.string("ASC,15.19,14.18;MACK,11.69,11.09;SHC,17.64,16.34", "PriceLevelString", confirm = true)
+show3R = input.bool(true, "3R", group="Shwo Price Levels")
+show4R = input.bool(true, "4R", group="Shwo Price Levels")
+
 backIndex = 80
 
 
@@ -50,13 +53,15 @@ if barstate.islastconfirmedhistory
             label.new(bar_index[backIndex], priceGoal2R, "2R = " + str.tostring(priceGoal2R), style = label.style_label_down, color = na, textcolor = color.green)
 
             // 3R Price
-            priceGoal3R = stock.buyPrice + 3 * R
-            line.new(bar_index[backIndex], priceGoal3R, bar_index, priceGoal3R, color = color.green, style = line.style_dashed)
-            label.new(bar_index[backIndex], priceGoal3R, "3R = " + str.tostring(priceGoal3R), style = label.style_label_down, color = na, textcolor = color.green)
+            if show3R
+                priceGoal3R = stock.buyPrice + 3 * R
+                line.new(bar_index[backIndex], priceGoal3R, bar_index, priceGoal3R, color = color.green, style = line.style_dashed)
+                label.new(bar_index[backIndex], priceGoal3R, "3R = " + str.tostring(priceGoal3R), style = label.style_label_down, color = na, textcolor = color.green)
 
             // 4R Price
-            priceGoal4R = stock.buyPrice + 4 * R
-            line.new(bar_index[backIndex], priceGoal4R, bar_index, priceGoal4R, color = color.green)
-            label.new(bar_index[backIndex], priceGoal4R, "4R = " + str.tostring(priceGoal4R), style = label.style_label_down, color = na, textcolor = color.green)
+            if show4R
+                priceGoal4R = stock.buyPrice + 4 * R
+                line.new(bar_index[backIndex], priceGoal4R, bar_index, priceGoal4R, color = color.green)
+                label.new(bar_index[backIndex], priceGoal4R, "4R = " + str.tostring(priceGoal4R), style = label.style_label_down, color = na, textcolor = color.green)
 // End
 
